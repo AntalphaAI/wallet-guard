@@ -77,6 +77,22 @@ GOPLUS_APP_KEY=your_app_key
 GOPLUS_SECRET_KEY=your_secret_key
 ```
 
+## When to Use — Real-World Scenarios
+
+| Scenario | Action | Tool |
+|----------|--------|------|
+| About to send funds to a new address | Check if the recipient is flagged as a scammer, hacker, or phishing wallet | `wallet-guard-address-security` |
+| Withdrawing from an exchange to an external address | Verify the destination wallet isn't blacklisted | `wallet-guard-address-security` |
+| Considering buying a new meme coin or token | Check if the contract is a honeypot (貔貅) or has hidden mint / abnormal tax | `wallet-guard-token-security` |
+| Someone shares a DeFi contract address | Assess Rug Pull risk — is liquidity locked? Does the owner have excessive admin rights? | `wallet-guard-rugpull-detection` |
+| About to mint or buy an NFT collection | Check if the contract has transfer restrictions, trading pause, or blacklist mechanisms | `wallet-guard-nft-security` |
+| Spotted a suspiciously cheap NFT on secondary market | Rule out contract-level sell restrictions that could trap your asset | `wallet-guard-nft-security` |
+| Received an airdrop or "claim" link via Telegram / Twitter | Verify the URL isn't a phishing site impersonating an official project | `wallet-guard-phishing-site` |
+| Routine wallet security check | Scan all active approvals — find and revoke unlimited ERC20 / NFT permissions | `wallet-guard-approval-security` |
+| Switching devices or returning after a long break | Full approval scan before resuming on-chain activity | `wallet-guard-approval-security` |
+
+---
+
 ## Usage Examples
 
 **Token contract scan:**
@@ -266,6 +282,22 @@ git clone https://github.com/AntalphaAI/wallet-guard.git
 GOPLUS_APP_KEY=your_app_key
 GOPLUS_SECRET_KEY=your_secret_key
 ```
+
+## 什么时候用 — 典型使用场景
+
+| 场景 | 建议操作 | 对应工具 |
+|------|---------|----------|
+| 准备转账给一个新地址 | 先查对方地址是否被标记为诈骗、黑客或钓鱼钱包 | `wallet-guard-address-security` |
+| 交易所提币填写地址 | 校验目标钱包是否在黑名单 | `wallet-guard-address-security` |
+| 准备买一个新 meme 币或代币 | 查合约是否是貔貅盘，或存在隐藏铸币 / 税率异常 | `wallet-guard-token-security` |
+| 有人发来一个 DeFi 合约地址 | 评估 Rug Pull 风险：流动性是否锁定、Owner 权限是否过大 | `wallet-guard-rugpull-detection` |
+| 准备铸造或购买某 NFT 系列 | 查合约是否存在转移锁定、交易暂停或黑名单机制 | `wallet-guard-nft-security` |
+| 二级市场看到低价 NFT | 排除合约级卖出限制，避免资产被困 | `wallet-guard-nft-security` |
+| 收到 Telegram / Twitter 空投领取链接 | 验证 URL 是否是仿冒官方的钓鱼网站 | `wallet-guard-phishing-site` |
+| 日常钱包安全检查 | 扫描所有活跃授权，找出并撤销无限额 ERC20 / NFT 授权 | `wallet-guard-approval-security` |
+| 换设备或长期未登录 | 恢复链上活动前先做一次全面授权扫描 | `wallet-guard-approval-security` |
+
+---
 
 ## 使用方式
 
