@@ -6,37 +6,44 @@
 
 # Antalpha Wallet Guard
 
-> One-click scan for high-risk wallet approvals. Protect your assets before it's too late.
+> v2.0.0 · Comprehensive Web3 Security — Token Risk, Phishing Detection, Rug Pull, Approval Scan
 
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/AntalphaAI/wallet-guard)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/AntalphaAI/wallet-guard)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Chain: Ethereum/BSC/Polygon/Base](https://img.shields.io/badge/chain-Multi--EVM-purple.svg)](https://ethereum.org)
+[![Chain: Multi-EVM](https://img.shields.io/badge/chain-Multi--EVM-purple.svg)](https://ethereum.org)
 [![Data: GoPlus](https://img.shields.io/badge/data-GoPlus%20Security-green.svg)](https://gopluslabs.io)
 
 ---
 
 ## What Is This?
 
-**Antalpha Wallet Guard** is a security skill for AI agents that scans EVM wallet token approvals and detects high-risk or unlimited allowances across Ethereum, BSC, Polygon, and Base networks.
+**Antalpha Wallet Guard** is a comprehensive Web3 security skill for AI agents, powered by the GoPlus Security API. It provides 6 categories of on-chain security detection to protect users from token scams, malicious addresses, dangerous approvals, NFT risks, phishing sites, and Rug Pulls.
 
-When you interact with DeFi protocols, NFT marketplaces, or any Web3 dApp, you often grant token spending permissions (approvals) to smart contracts. Forgotten or malicious approvals are one of the most common vectors for wallet draining attacks.
-
-This skill plugs into your AI agent and gives it the ability to:
-
-- Scan a wallet address for all active token approvals across multiple EVM chains
-- Identify unlimited, suspicious, or maliciously flagged spenders
-- Explain the risk in plain language
-- Guide you to revoke dangerous approvals immediately
+v2.0.0 upgrades from a single approval-scan workflow to a full MCP tool suite — giving your AI agent real-time, multi-dimensional security intelligence.
 
 ## Features
 
-- 🔍 **One-click approval scan** — just provide a wallet address (chain auto-detected or specified)
-- 🚨 **High-risk detection** — flags unlimited approvals, suspicious contracts, and malicious spenders
-- 🌐 **Multi-chain support** — Ethereum, BSC, Polygon, Base (scanned automatically if no chain specified)
-- 🌐 **Language-adaptive output** — responds in the user's language (English, Chinese, and more)
-- 🏥 **Actionable guidance** — always includes revocation advice when danger is found
-- 🛡️ **Safe fallback** — never fabricates data; fails clearly if the API is unavailable
-- 📊 **Powered by GoPlus Security API** — real-time on-chain approval data, no API key required
+- 🔍 **Token Contract Risk** — detect honeypot, hidden mint, abnormal tax, trading restrictions (20+ checks)
+- 🚨 **Malicious Address Check** — identify phishing wallets, hackers, sanctioned addresses, scam entities
+- 🛡️ **Approval Risk Scan** — ERC20/ERC721/ERC1155 combined scan, flag unlimited and suspicious approvals
+- 🖼️ **NFT Security** — detect NFT contract risks (transfer lock, blacklist mechanisms, upgrade risk)
+- 🌐 **Phishing Site Detection** — verify a URL before connecting your wallet
+- 💣 **Rug Pull Detection** — DeFi contract Rug Pull risk assessment (Beta)
+- 🔑 **GoPlus Auth** — dual-step authentication with auto-renewal; falls back to public API gracefully
+- ⚡ **In-Memory Cache** — per-tool TTL cache reduces redundant API calls
+- 🌍 **Multi-Chain** — Ethereum, BSC, Polygon, Base
+- 🌐 **Language-Adaptive** — responds in the user's language (English, Chinese, and more)
+
+## MCP Tools
+
+| Tool | Capability |
+|------|-----------|
+| `wallet-guard-token-security` | ERC20 contract risk (honeypot, hidden mint, tax, etc.) |
+| `wallet-guard-address-security` | Malicious address / blacklist detection |
+| `wallet-guard-approval-security` | Wallet approval risk scan (ERC20 + NFT) |
+| `wallet-guard-nft-security` | NFT contract risk detection |
+| `wallet-guard-phishing-site` | Phishing website detection |
+| `wallet-guard-rugpull-detection` | DeFi Rug Pull risk detection (Beta) |
 
 ## Supported Chains
 
@@ -50,7 +57,7 @@ This skill plugs into your AI agent and gives it the ability to:
 
 ## Installation
 
-This skill is an **instruction-only** skill. No dependencies to install beyond `curl`.
+This skill connects to the Antalpha AI MCP server.
 
 ```bash
 # Install via clawhub
@@ -63,37 +70,48 @@ Or clone manually:
 git clone https://github.com/AntalphaAI/wallet-guard.git
 ```
 
-## Usage
-
-Once installed, simply ask your AI agent:
+**Optional environment variables** (falls back to GoPlus public API if not set):
 
 ```
-Scan my wallet: 0xYourWalletAddressHere
+GOPLUS_APP_KEY=your_app_key
+GOPLUS_SECRET_KEY=your_secret_key
 ```
 
+## Usage Examples
+
+**Token contract scan:**
 ```
-Check if 0x742d35Cc6634C0532925a3b844Bc454e4438f44e has dangerous approvals
+Is this token safe to buy? Contract: 0xYourTokenAddress on Ethereum
 ```
 
+**Address check:**
 ```
-帮我扫描这个 BSC 钱包：0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-```
-
-```
-Scan my Polygon wallet: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+Is 0x742d35Cc6634C0532925a3b844Bc454e4438f44e a safe address to send funds to?
 ```
 
-The agent will:
+**Approval scan:**
+```
+Scan my wallet for dangerous approvals: 0xYourWalletAddress
+```
 
-1. Validate the address format
-2. Detect which chain to scan (or scan all four chains if none specified)
-3. Call the GoPlus Security approval API for each target chain
-4. Analyze all token approvals
-5. Return a structured security report per chain
+**NFT safety check:**
+```
+Check if this NFT collection is safe: 0xNFTContractAddress on Ethereum
+```
+
+**Phishing check:**
+```
+Is https://uniswap-airdrop.com a phishing site?
+```
+
+**Rug Pull check:**
+```
+Does this DeFi contract have Rug Pull risk? 0xContractAddress on BSC
+```
 
 ## Example Output
 
-**When danger is found:**
+**When danger is found (approval scan):**
 
 ```
 🚨 High Risk Detected
@@ -117,41 +135,54 @@ Data provided by Antalpha AI data aggregation.
 
 ```
 ✅ Your wallet is extremely healthy!
-No high-risk unlimited approvals found across Ethereum, BSC, Polygon, or Base. Keep up the good on-chain habits!
+No high-risk issues found across Ethereum, BSC, Polygon, or Base. Keep up the good on-chain habits!
 
 Data provided by Antalpha AI data aggregation.
 ```
 
-## How It Works
+## Architecture (v2.0.0)
 
-1. The agent calls the public [GoPlus Security API](https://gopluslabs.io) (`/api/v2/token_approval_security/{chainId}`)
-2. When no chain is specified, it scans Ethereum (1), BSC (56), Polygon (137), and Base (8453) in sequence
-3. It inspects each token's `approved_list` for dangerous spender patterns using refined risk rules
-4. High-risk flags: unlimited `approved_amount`, `doubt_list: 1`, `malicious_behavior` tags, or `is_open_source: 0` combined with suspicious signals
-5. Results are formatted as a readable security report per chain — never raw JSON
+```
+WalletGuardModule (NestJS)
+├── GoplusAuthService    ← dual-step auth, token auto-renewal, concurrency lock
+├── GoplusCacheService   ← in-memory TTL cache per tool
+├── GoplusApiService     ← GoPlus API wrapper (6 endpoints + unified error handling)
+└── WalletGuardTools     ← 6 MCP tools registration
+```
 
 ## Security Notes
 
 - Results are security guidance, not a cryptographic guarantee of wallet safety
 - A clean scan does not mean the wallet is risk-free across all attack surfaces
 - If the API is unavailable, the skill fails gracefully and suggests manual revocation via [Revoke.cash](https://revoke.cash)
+- F6 dApp Security has been removed (GoPlus paid-only endpoint)
+- F7 Rug Pull Detection is Beta — results may have limited accuracy
 
 ## Changelog
 
+### v2.0.0 (2026-04-20)
+- Upgraded to MCP tool-based architecture (6 MCP tools via Antalpha AI server)
+- Added: `wallet-guard-token-security` — ERC20 contract risk detection (20+ checks)
+- Added: `wallet-guard-address-security` — malicious address / blacklist detection (12+ risk types)
+- Added: `wallet-guard-nft-security` — NFT contract risk detection
+- Added: `wallet-guard-phishing-site` — phishing website detection
+- Added: `wallet-guard-rugpull-detection` — DeFi Rug Pull risk detection (Beta)
+- Upgraded: `wallet-guard-approval-security` to GoPlus v2 API, now supports ERC20 + ERC721 + ERC1155 combined scan
+- Added: GoPlus dual-step authentication (App Key + Secret → Bearer Token) with auto-renewal and concurrency lock
+- Added: In-memory TTL cache layer with per-tool independent TTL configuration
+- Removed: F6 dApp Security (GoPlus paid-only endpoint, code 4033)
+
 ### v1.1.0 — Multi-Chain Support
-- Added support for BNB Smart Chain (chainId: 56), Polygon (chainId: 137), and Base (chainId: 8453)
+- Added support for BNB Smart Chain (56), Polygon (137), and Base (8453)
 - When no chain is specified, all four supported chains are scanned sequentially
-- Refined high-risk detection: introduced `doubt_list` / `trust_list` signals to reduce false positives from closed-source contracts
-- Clarified numeric unlimited approval threshold: > 2^96 (~79 septillion) is treated as unlimited
-- Translation fix: "surfing habits" → "on-chain habits"
-- Footer fix: "Antalpha Ai" → "Antalpha AI"
+- Refined high-risk detection: introduced `doubt_list` / `trust_list` signals
+- Clarified numeric unlimited approval threshold: > 2^96 treated as unlimited
+- Translation and footer fixes
 
 ### v1.0.0 — Initial Release
 - Ethereum mainnet approval scan via GoPlus Security API
 - High-risk detection: unlimited approvals, closed-source contracts, malicious behavior tags
-- Language-adaptive output (English, Chinese, and more)
-- Defensive validation — safe failure on API errors or schema changes
-- Mandatory source attribution footer
+- Language-adaptive output, defensive validation, mandatory source attribution footer
 
 ## Maintainer
 
@@ -165,9 +196,9 @@ Built with ❤️ for safer Web3.
 
 # Antalpha Wallet Guard（钱包守卫）
 
-> 一键扫描钱包高危授权，在资产被盗之前守住你的钱包。
+> v2.0.0 · 全面 Web3 安全防护 — 代币风险、钓鱼检测、Rug Pull、授权扫描
 
-[![版本](https://img.shields.io/badge/版本-1.1.0-blue.svg)](https://github.com/AntalphaAI/wallet-guard)
+[![版本](https://img.shields.io/badge/版本-2.0.0-blue.svg)](https://github.com/AntalphaAI/wallet-guard)
 [![协议](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![链](https://img.shields.io/badge/链-多EVM链-purple.svg)](https://ethereum.org)
 [![数据](https://img.shields.io/badge/数据-GoPlus%20Security-green.svg)](https://gopluslabs.io)
@@ -176,26 +207,33 @@ Built with ❤️ for safer Web3.
 
 ## 这是什么？
 
-**Antalpha Wallet Guard** 是一个面向 AI Agent 的钱包安全 Skill，专门扫描以太坊、BSC、Polygon、Base 钱包的 Token 授权记录，识别可能威胁你资产安全的高危或无限额授权。
+**Antalpha Wallet Guard** 是一个基于 GoPlus Security API 的 AI Agent Web3 安全 Skill，提供 6 大类链上安全检测能力，全面保护用户免受代币合约风险、恶意地址、危险授权、NFT 风险、钓鱼网站和 Rug Pull 的侵害。
 
-当你与 DeFi 协议、NFT 平台或任何 Web3 应用交互时，往往会向智能合约授予 Token 的使用权限（Approval）。这些被遗忘的或恶意的授权，是钱包被盗最常见的攻击入口之一。
-
-接入 AI Agent 后，这个 Skill 可以帮你：
-
-- 扫描钱包地址下所有活跃的 Token 授权（跨多条 EVM 链）
-- 识别无限额授权、可疑合约、以及带有恶意标签的授权方
-- 用大白话解释风险所在
-- 立即给出撤销建议
+v2.0.0 从单一授权扫描升级为完整 MCP 工具套件，为你的 AI Agent 提供实时、多维度的安全情报。
 
 ## 功能特性
 
-- 🔍 **一键授权扫描** — 只需提供钱包地址即可（链自动识别，或手动指定）
-- 🚨 **高危检测** — 标记无限额授权、可疑合约及恶意授权方
-- 🌐 **多链支持** — 以太坊、BSC、Polygon、Base（未指定链时自动扫描全部四条链）
+- 🔍 **代币合约风险** — 检测貔貅盘、隐藏铸币、税率异常、交易限制等 20+ 项风险
+- 🚨 **恶意地址检测** — 识别钓鱼钱包、黑客地址、制裁地址、诈骗实体
+- 🛡️ **授权风险扫描** — ERC20/ERC721/ERC1155 三合一扫描，标记无限额及可疑授权
+- 🖼️ **NFT 安全检测** — 检测 NFT 合约风险（转移锁定、黑名单机制、升级风险）
+- 🌐 **钓鱼网站检测** — 连接钱包前先验证网站安全性
+- 💣 **Rug Pull 检测** — DeFi 合约跑路风险评估（Beta）
+- 🔑 **GoPlus 鉴权** — 双步鉴权 + 自动续期；无 Key 时自动降级到公共 API
+- ⚡ **内存缓存** — 各工具独立 TTL，减少重复 API 调用
+- 🌍 **多链支持** — 以太坊、BSC、Polygon、Base
 - 🌐 **语言自适应** — 自动识别用户语言，支持中文、英文等多语言回复
-- 🏥 **行动指引** — 发现风险时必定附带撤销建议
-- 🛡️ **安全兜底** — 从不编造数据，API 不可用时明确告知
-- 📊 **GoPlus Security API 驱动** — 实时链上授权数据，无需 API Key
+
+## MCP 工具列表
+
+| 工具 | 功能说明 |
+|------|---------|
+| `wallet-guard-token-security` | ERC20 合约风险检测（貔貅、隐藏铸币、税率等）|
+| `wallet-guard-address-security` | 恶意地址/黑名单检测 |
+| `wallet-guard-approval-security` | 钱包授权风险扫描（ERC20 + NFT）|
+| `wallet-guard-nft-security` | NFT 合约风险检测 |
+| `wallet-guard-phishing-site` | 钓鱼网站检测 |
+| `wallet-guard-rugpull-detection` | DeFi Rug Pull 风险检测（Beta）|
 
 ## 支持的链
 
@@ -209,7 +247,7 @@ Built with ❤️ for safer Web3.
 
 ## 安装方式
 
-这是一个**纯指令型** Skill，除 `curl` 外无需安装任何依赖。
+此 Skill 连接 Antalpha AI MCP 服务器。
 
 ```bash
 # 通过 clawhub 安装
@@ -222,37 +260,48 @@ clawhub install antalpha-wallet-guard
 git clone https://github.com/AntalphaAI/wallet-guard.git
 ```
 
+**可选环境变量**（不配置则自动降级到 GoPlus 公共 API）：
+
+```
+GOPLUS_APP_KEY=your_app_key
+GOPLUS_SECRET_KEY=your_secret_key
+```
+
 ## 使用方式
 
-安装后，直接向你的 AI Agent 发送：
-
+**代币合约安全检测：**
 ```
-帮我扫描这个钱包：0x你的钱包地址
-```
-
-```
-检查 0x742d35Cc6634C0532925a3b844Bc454e4438f44e 有没有危险授权
+这个代币安全吗？合约地址：0x你的代币地址，以太坊链
 ```
 
+**地址安全检测：**
 ```
-帮我扫描 BSC 钱包：0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-```
-
-```
-扫描我的 Polygon 钱包：0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+这个地址安全吗？0x742d35Cc6634C0532925a3b844Bc454e4438f44e
 ```
 
-Agent 会自动完成：
+**授权扫描：**
+```
+帮我扫描这个钱包的危险授权：0x你的钱包地址
+```
 
-1. 校验地址格式
-2. 识别要扫描的链（未指定则扫描全部四条链）
-3. 调用 GoPlus Security 授权扫描 API
-4. 分析所有 Token 授权
-5. 输出结构化安全报告
+**NFT 安全检测：**
+```
+这个 NFT 合约安全吗？0xNFT合约地址
+```
+
+**钓鱼网站检测：**
+```
+https://uniswap-airdrop.com 是钓鱼网站吗？
+```
+
+**Rug Pull 检测：**
+```
+这个 DeFi 合约有跑路风险吗？0x合约地址，BSC 链
+```
 
 ## 输出示例
 
-**发现风险时：**
+**发现风险时（授权扫描）：**
 
 ```
 🚨 检测到高危授权
@@ -276,41 +325,54 @@ Token：BUSD
 
 ```
 ✅ 钱包非常健康！
-在以太坊、BSC、Polygon、Base 上均未发现高危无限额授权，继续保持良好的链上习惯！
+在以太坊、BSC、Polygon、Base 上均未发现高危风险，继续保持良好的链上习惯！
 
 数据来源：Antalpha AI 数据聚合
 ```
 
-## 工作原理
+## 系统架构（v2.0.0）
 
-1. Agent 调用公开的 [GoPlus Security API](https://gopluslabs.io)（`/api/v2/token_approval_security/{chainId}`）
-2. 用户未指定链时，依次查询以太坊（1）、BSC（56）、Polygon（137）、Base（8453）四条链
-3. 使用重构后的风险规则检查每个 Token 的 `approved_list` 中的危险授权方
-4. 高危判断：无限额授权、`doubt_list: 1`、恶意标签、`is_open_source: 0` 配合可疑信号等
-5. 输出格式为可读的安全报告，从不直接暴露原始 JSON
+```
+WalletGuardModule（NestJS）
+├── GoplusAuthService    ← 双步鉴权、Token 自动续期、并发锁
+├── GoplusCacheService   ← 各工具独立 TTL 内存缓存
+├── GoplusApiService     ← GoPlus API 封装（6 个接口 + 统一错误处理）
+└── WalletGuardTools     ← 6 个 MCP Tool 注册
+```
 
 ## 安全说明
 
 - 扫描结果为安全建议，不构成钱包安全的密码学保证
 - 扫描结果干净 ≠ 钱包在所有攻击面上都安全
 - 若 API 不可用，Skill 会安全降级，引导用户前往 [Revoke.cash](https://revoke.cash) 手动操作
+- F6 dApp Security 已移除（GoPlus 付费专属接口）
+- F7 Rug Pull Detection 为 Beta 版，结果准确性可能不稳定
 
 ## 更新日志
 
+### v2.0.0（2026-04-20）
+- 升级为 MCP Tool 架构（6 个工具，通过 Antalpha AI MCP 服务器提供）
+- 新增：`wallet-guard-token-security` — ERC20 合约风险检测（20+ 检测项）
+- 新增：`wallet-guard-address-security` — 恶意地址/黑名单检测（12+ 风险类型）
+- 新增：`wallet-guard-nft-security` — NFT 合约风险检测
+- 新增：`wallet-guard-phishing-site` — 钓鱼网站检测
+- 新增：`wallet-guard-rugpull-detection` — DeFi Rug Pull 风险检测（Beta）
+- 升级：`wallet-guard-approval-security` 至 GoPlus v2 API，支持 ERC20/ERC721/ERC1155 三合一扫描
+- 新增：GoPlus 双步鉴权（App Key + Secret → Bearer Token），内置自动续期与并发锁
+- 新增：各接口独立 TTL 内存缓存层
+- 移除：F6 dApp Security（GoPlus 付费专属接口，code 4033）
+
 ### v1.1.0 — 多链支持
-- 新增支持 BNB Smart Chain（chainId: 56）、Polygon（chainId: 137）和 Base（chainId: 8453）
-- 用户未指定链时默认依次扫描全部四条支持链
-- 重构高危检测规则：引入 `doubt_list` / `trust_list` 信号，减少闭源合约误报
-- 明确数值型无限额授权阈值：> 2^96（约 7900 京）视为无限额
-- 翻译修复："surfing habits" → "on-chain habits"
-- Footer 修复："Antalpha Ai" → "Antalpha AI"
+- 新增 BNB Smart Chain（56）、Polygon（137）、Base（8453）支持
+- 未指定链时自动扫描全部四条链
+- 重构高危检测规则：引入 `doubt_list` / `trust_list` 信号
+- 明确无限额授权数值阈值（> 2^96）
+- 翻译和 Footer 修复
 
 ### v1.0.0 — 首次发布
 - 基于 GoPlus Security API 的以太坊主网授权扫描
 - 高危检测：无限额授权、非开源合约、恶意行为标签
-- 语言自适应输出（中文、英文等多语言）
-- 防御性校验 — API 异常或响应格式变更时安全失败
-- 强制数据来源署名
+- 语言自适应输出，防御性校验，强制数据来源署名
 
 ## 维护团队
 
