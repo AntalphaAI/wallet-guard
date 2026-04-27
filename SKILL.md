@@ -1,7 +1,7 @@
 ---
 name: antalpha-wallet-guard
-version: 2.0.0
-description: Wallet security guard powered by GoPlus Security API. Use when a user asks for wallet security check, token security scan, address blacklist check, approval risk scan (ERC20/ERC721/ERC1155), NFT security check, phishing site detection, Rug Pull risk detection, or provides a wallet/contract address for risk review. Covers 6 security detection capabilities: token contract risk, malicious address, approval risk, NFT security, phishing site, Rug Pull detection.
+version: 3.0.0
+description: Wallet security guard powered by GoPlus Security API. Use when a user asks for wallet security check, token security scan, token deep scan, address blacklist check, approval risk scan (ERC20/ERC721/ERC1155), NFT security check, phishing site detection, Rug Pull risk detection, comprehensive token security report, honeypot detection, risk score, scenario-aware token analysis, or provides a wallet/contract address for risk review. Covers 7 security detection capabilities: token contract risk, token deep scan with risk scoring, malicious address, approval risk, NFT security, phishing site, Rug Pull detection.
 author: Antalpha
 requires: [curl]
 metadata:
@@ -18,7 +18,7 @@ metadata:
       required: false
 ---
 
-# Antalpha Wallet Guard v2
+# Antalpha Wallet Guard v3
 
 ## Persona
 
@@ -30,11 +30,12 @@ Treat every scan like a financial safety examination.
 
 ## Available MCP Tools
 
-This skill exposes 6 MCP tools via the Antalpha AI MCP server:
+This skill exposes 7 MCP tools via the Antalpha AI MCP server:
 
 | Tool | Description |
 |------|-------------|
 | `wallet-guard-token-security` | ERC20 contract risk detection (honeypot, hidden mint, abnormal tax, etc.) |
+| `wallet-guard-token-deep-scan` | Deep token contract analysis with scenario-aware classification, cross-validation, and 0-100 risk scoring |
 | `wallet-guard-address-security` | Malicious address / blacklist detection (phishing, hackers, scams, 12+ risk types) |
 | `wallet-guard-approval-security` | Wallet approval risk scan (ERC20 unlimited approvals, ERC721/ERC1155 dangerous approvals) |
 | `wallet-guard-nft-security` | NFT contract risk detection (transfer restrictions, blacklist mechanisms, etc.) |
@@ -49,6 +50,8 @@ Use this skill when any of the following is true:
 
 - The user asks for a wallet security check, health scan, approval scan, revoke review, or wallet anti-theft assessment.
 - The user provides a wallet address or contract address for security analysis.
+- The user wants a comprehensive token security report or deeper token risk analysis.
+- The user wants to know the risk score of a token contract.
 - The user wants to check if a token contract has honeypot, hidden mint, or abnormal tax risks.
 - The user wants to check if an address is on a malicious/blacklist.
 - The user wants to check if a URL or website is a phishing site.
@@ -68,6 +71,18 @@ Detects ERC20 contract risks (honeypot, hidden mint, abnormal tax, trading restr
 - `contract_addresses` (required): comma-separated contract addresses (e.g., `"0xabc,0xdef"`)
 
 **Use when:** user asks about a token contract's safety before trading.
+
+---
+
+### wallet-guard-token-deep-scan
+
+Deep token contract security analysis with scenario-aware classification (Stablecoin/Ecosystem/Meme), cross-validation engine, and dynamic risk scoring. Detects honeypots, extreme tax, hidden owners, self-destruct, ownership reclaim, and balance manipulation. Produces a 0-100 risk score with fatal findings and contextual explanations.
+
+**Parameters:**
+- `chain_id` (required): EVM chain ID (e.g., `"1"` for Ethereum, `"56"` for BSC)
+- `contract_address` (required): single token contract address to deep-scan (0x-prefixed, 42 chars)
+
+**Use when:** user wants a comprehensive token security report, or when `wallet-guard-token-security` results need deeper interpretation.
 
 ---
 
@@ -149,6 +164,8 @@ Detects DeFi Rug Pull risk for a contract (Beta).
 | BSC, BNB, BNB Chain, Binance | `56` |
 | Polygon, MATIC | `137` |
 | Base, BASE | `8453` |
+| Avalanche, AVAX | `43114` |
+| Arbitrum, ARB | `42161` |
 | (not specified) | default to `1` or ask user |
 
 ---
@@ -175,6 +192,17 @@ When no chain is specified for approval scan:
 | `is_open_source: 0` + `trust_list: 1` | ✅ Low Risk |
 | `is_open_source: 0` + neither flag | ⚠️ Watch |
 | `malicious_address: 1` on token entry | 🚨 High Risk |
+
+---
+
+## Token Deep Scan — Risk Score Reference
+
+| Risk Score | Level | Meaning |
+|------------|-------|---------|
+| 0–29 | ✅ Low Risk | Token appears safe |
+| 30–59 | ⚠️ Medium Risk | Notable concerns, proceed with caution |
+| 60–84 | 🔴 High Risk | Significant red flags detected |
+| 85–100 | 🚨 Critical / Fatal | Do not trade — likely scam or honeypot |
 
 ---
 
@@ -218,6 +246,11 @@ Every response must end with:
 ---
 
 ## Changelog
+
+### v3.0.0 (2026-04-27)
+- Added: `wallet-guard-token-deep-scan` — deep token contract analysis with scenario-aware classification (Stablecoin/Ecosystem/Meme), cross-validation engine, dynamic 0-100 risk scoring
+- Detects: honeypots, extreme tax, hidden owners, self-destruct, ownership reclaim, balance manipulation
+- Extended chain ID support: Avalanche (43114) and Arbitrum (42161) added to Chain ID Reference
 
 ### v2.0.0 (2026-04-20)
 - Upgraded to MCP tool-based architecture (6 MCP tools via Antalpha AI server)
