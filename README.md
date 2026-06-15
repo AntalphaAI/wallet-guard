@@ -6,9 +6,9 @@
 
 # Antalpha Wallet Guard
 
-> v3.0.0 · Comprehensive Web3 Security — Token Risk, Token Deep Scan, Phishing Detection, Rug Pull, Approval Scan
+> v3.0.1 · Comprehensive Web3 Security — Token Risk, Token Deep Scan, Phishing Detection, Rug Pull, Approval Scan
 
-[![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)](https://github.com/AntalphaAI/wallet-guard)
+[![Version](https://img.shields.io/badge/version-3.0.1-blue.svg)](https://github.com/AntalphaAI/wallet-guard)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Chain: Multi-EVM](https://img.shields.io/badge/chain-Multi--EVM-purple.svg)](https://ethereum.org)
 [![Data: GoPlus](https://img.shields.io/badge/data-GoPlus%20Security-green.svg)](https://gopluslabs.io)
@@ -221,6 +221,9 @@ WalletGuardModule (NestJS)
 
 ## Changelog
 
+### v3.0.1 (2026-06-15)
+- Fixed: MCP endpoint — install URL corrected to `mcp-skills.ai.antalpha.com/mcp` (previous `mcp.antalpha.com/wallet-guard` was unreachable)
+
 ### v3.0.0 (2026-04-27)
 - Added: `wallet-guard-token-deep-scan` — scenario-aware deep token analysis with cross-validation engine and dynamic 0-100 risk scoring
 - Detects: honeypots, extreme tax, hidden owners, self-destruct, ownership reclaim, balance manipulation
@@ -263,9 +266,9 @@ Built with ❤️ for safer Web3.
 
 # Antalpha Wallet Guard（钱包守卫）
 
-> v3.0.0 · 全面 Web3 安全防护 — 代币风险、代币深度扫描、钓鱼检测、Rug Pull、授权扫描
+> v3.0.1 · 全面 Web3 安全防护 — 代币风险、代币深度扫描、钓鱼检测、Rug Pull、授权扫描
 
-[![版本](https://img.shields.io/badge/版本-3.0.0-blue.svg)](https://github.com/AntalphaAI/wallet-guard)
+[![版本](https://img.shields.io/badge/版本-3.0.1-blue.svg)](https://github.com/AntalphaAI/wallet-guard)
 [![协议](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![链](https://img.shields.io/badge/链-多EVM链-purple.svg)](https://ethereum.org)
 [![数据](https://img.shields.io/badge/数据-GoPlus%20Security-green.svg)](https://gopluslabs.io)
@@ -477,6 +480,9 @@ WalletGuardModule（NestJS）
 - F7 Rug Pull Detection 为 Beta 版，结果准确性可能不稳定
 
 ## 更新日志
+
+### v3.0.1（2026-06-15）
+- 修复：MCP 接入地址——安装 URL 由不可达的 `mcp.antalpha.com/wallet-guard` 改为 `mcp-skills.ai.antalpha.com/mcp`（此前 skill 无法连接 MCP）
 
 ### v3.0.0（2026-04-27）
 - 新增：`wallet-guard-token-deep-scan` — 场景感知深度代币分析，交叉验证引擎，动态 0-100 风险评分

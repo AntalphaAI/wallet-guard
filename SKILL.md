@@ -1,6 +1,6 @@
 ---
 name: antalpha-wallet-guard
-version: 3.0.0
+version: 3.0.1
 description: Wallet security guard powered by GoPlus Security API. Use when a user asks for wallet security check, token security scan, token deep scan, address blacklist check, approval risk scan (ERC20/ERC721/ERC1155), NFT security check, phishing site detection, Rug Pull risk detection, comprehensive token security report, honeypot detection, risk score, scenario-aware token analysis, or provides a wallet/contract address for risk review. Covers 7 security detection capabilities: token contract risk, token deep scan with risk scoring, malicious address, approval risk, NFT security, phishing site, Rug Pull detection.
 author: Antalpha
 requires: [curl]
@@ -8,7 +8,7 @@ metadata:
   install:
     type: mcp
     mcp:
-      url: https://mcp.antalpha.com/wallet-guard
+      url: https://mcp-skills.ai.antalpha.com/mcp
   env:
     - name: GOPLUS_APP_KEY
       description: GoPlus App Key (optional, falls back to public API if not set)
@@ -246,6 +246,9 @@ Every response must end with:
 ---
 
 ## Changelog
+
+### v3.0.1 (2026-06-15)
+- Fixed: MCP endpoint — corrected install URL from `mcp.antalpha.com/wallet-guard` (unreachable, HTTP 000) to `mcp-skills.ai.antalpha.com/mcp`; the skill could not connect to MCP before this fix
 
 ### v3.0.0 (2026-04-27)
 - Added: `wallet-guard-token-deep-scan` — deep token contract analysis with scenario-aware classification (Stablecoin/Ecosystem/Meme), cross-validation engine, dynamic 0-100 risk scoring
