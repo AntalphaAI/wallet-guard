@@ -1,7 +1,7 @@
 ---
 name: antalpha-wallet-guard
-version: 3.0.1
-description: Wallet security guard powered by GoPlus Security API. Use when a user asks for wallet security check, token security scan, token deep scan, address blacklist check, approval risk scan (ERC20/ERC721/ERC1155), NFT security check, phishing site detection, Rug Pull risk detection, comprehensive token security report, honeypot detection, risk score, scenario-aware token analysis, or provides a wallet/contract address for risk review. Covers 7 security detection capabilities: token contract risk, token deep scan with risk scoring, malicious address, approval risk, NFT security, phishing site, Rug Pull detection.
+version: 3.0.2
+description: Wallet security guard powered by GoPlus Security API. Use when a user asks for wallet security check, token security scan, token deep scan, address blacklist check, approval risk scan (ERC20/ERC721/ERC1155), NFT security check, phishing site detection, Rug Pull risk detection, comprehensive token security report, honeypot detection, risk score, scenario-aware token analysis, or provides a wallet/contract address for risk review. Covers 5 security detection capabilities: token deep scan with ERC20 risk detection and risk scoring, malicious address, approval risk, NFT security, phishing site.
 author: Antalpha
 requires: [curl]
 metadata:
@@ -30,17 +30,17 @@ Treat every scan like a financial safety examination.
 
 ## Available MCP Tools
 
-This skill exposes 7 MCP tools via the Antalpha AI MCP server:
+This skill exposes 5 MCP tools via the Antalpha AI MCP server:
 
 | Tool | Description |
 |------|-------------|
-| `wallet-guard-token-security` | ERC20 contract risk detection (honeypot, hidden mint, abnormal tax, etc.) |
-| `wallet-guard-token-deep-scan` | Deep token contract analysis with scenario-aware classification, cross-validation, and 0-100 risk scoring |
+| `wallet-guard-token-deep-scan` | Deep token contract analysis with ERC20 risk detection (honeypot, hidden mint, abnormal tax), scenario-aware classification, cross-validation, Rug Pull risk, and 0-100 risk scoring |
 | `wallet-guard-address-security` | Malicious address / blacklist detection (phishing, hackers, scams, 12+ risk types) |
 | `wallet-guard-approval-security` | Wallet approval risk scan (ERC20 unlimited approvals, ERC721/ERC1155 dangerous approvals) |
 | `wallet-guard-nft-security` | NFT contract risk detection (transfer restrictions, blacklist mechanisms, etc.) |
 | `wallet-guard-phishing-site` | Phishing website detection |
-| `wallet-guard-rugpull-detection` | DeFi Rug Pull risk detection (Beta) |
+
+> **First-time registration**: Before calling any tool, call `antalpha-register` once to obtain an `agent_id` + `api_key`; persist them and pass `agent_id` with every subsequent tool call.
 
 ---
 
@@ -62,27 +62,15 @@ Use this skill when any of the following is true:
 
 ## Tool Usage Guide
 
-### wallet-guard-token-security
-
-Detects ERC20 contract risks (honeypot, hidden mint, abnormal tax, trading restrictions, etc.).
-
-**Parameters:**
-- `chain_id` (required): EVM chain ID (e.g., `"1"` for Ethereum, `"56"` for BSC)
-- `contract_addresses` (required): comma-separated contract addresses (e.g., `"0xabc,0xdef"`)
-
-**Use when:** user asks about a token contract's safety before trading.
-
----
-
 ### wallet-guard-token-deep-scan
 
-Deep token contract security analysis with scenario-aware classification (Stablecoin/Ecosystem/Meme), cross-validation engine, and dynamic risk scoring. Detects honeypots, extreme tax, hidden owners, self-destruct, ownership reclaim, and balance manipulation. Produces a 0-100 risk score with fatal findings and contextual explanations.
+Deep token contract security analysis with built-in ERC20 risk detection (honeypot, hidden mint, abnormal tax, trading restrictions), scenario-aware classification (Stablecoin/Ecosystem/Meme), cross-validation engine, DeFi Rug Pull risk, and dynamic risk scoring. Detects honeypots, extreme tax, hidden owners, self-destruct, ownership reclaim, and balance manipulation. Produces a 0-100 risk score with fatal findings and contextual explanations.
 
 **Parameters:**
 - `chain_id` (required): EVM chain ID (e.g., `"1"` for Ethereum, `"56"` for BSC)
-- `contract_address` (required): single token contract address to deep-scan (0x-prefixed, 42 chars)
+- `token` (required): token to screen — a contract address (0x-prefixed, 42 chars) OR a symbol/name (e.g. `USDC`, `PEPE`). A symbol is resolved to the official contract on `chain_id`; an address is also checked for ticker impersonation. (`contract_address` is accepted as an alias.)
 
-**Use when:** user wants a comprehensive token security report, or when `wallet-guard-token-security` results need deeper interpretation.
+**Use when:** user wants a comprehensive token security report, an ERC20 contract safety check before trading, or a DeFi Rug Pull risk assessment.
 
 ---
 
@@ -141,18 +129,6 @@ Checks if a URL is a known phishing website.
 - `url` (required): URL to check (e.g., `"https://uniswap-airdrop.com"`)
 
 **Use when:** user asks whether a website is safe before connecting their wallet.
-
----
-
-### wallet-guard-rugpull-detection
-
-Detects DeFi Rug Pull risk for a contract (Beta).
-
-**Parameters:**
-- `chain_id` (required): EVM chain ID
-- `contract_address` (required): DeFi contract or LP address
-
-**Use when:** user asks about a DeFi protocol's Rug Pull risk before investing.
 
 ---
 
@@ -246,6 +222,12 @@ Every response must end with:
 ---
 
 ## Changelog
+
+### v3.0.2 (2026-06-18)
+- Removed: `wallet-guard-token-security` — its ERC20 contract risk detection (honeypot, hidden mint, abnormal tax) is now folded into `wallet-guard-token-deep-scan`
+- Removed: `wallet-guard-rugpull-detection` — retired; DeFi Rug Pull risk is now covered by `wallet-guard-token-deep-scan`
+- Changed: `wallet-guard-token-deep-scan` now accepts `token` (contract address OR symbol/name; `contract_address` kept as alias) and reports ERC20 + Rug Pull risk in a single deep scan
+- Aligned tool set to the 5 tools served by the current MCP server; added `antalpha-register` first-time registration note. MCP endpoint unchanged: `https://mcp-skills.ai.antalpha.com/mcp`
 
 ### v3.0.1 (2026-06-15)
 - Fixed: MCP endpoint — corrected install URL from `mcp.antalpha.com/wallet-guard` (unreachable, HTTP 000) to `mcp-skills.ai.antalpha.com/mcp`; the skill could not connect to MCP before this fix
